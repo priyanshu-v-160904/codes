@@ -1,106 +1,79 @@
-#include<stdio.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-#define max 100
-int top=-1;
-int is_empty(){
-    if(top==-1){
-        return 1;
-    }
-    else{
-        return 0;
-    }
+#define MAX_SIZE 100
 
+int stack[MAX_SIZE];
+int top = -1;
+
+int isFull() {
+    return top == MAX_SIZE - 1;
 }
-int is_full(){
-    if(top==max-1){
-        return 1;
 
-    }
-    else{
-        return 0;
-    }
+int isEmpty() {
+    return top == -1;
 }
-void push(int *arr){
-    if(is_full()){
-        printf("stack_overflow");
+
+void push(int data) {
+    if (isFull()) {
+        printf("Stack Overflow\n");
         return;
     }
-    else{
-        printf("enter the element\n");
-        int c;
-        scanf("%d",&c);
-        top++;
-        arr[top]=c;
+    stack[++top] = data;
+    printf("%d pushed to stack\n", data);
+}
+
+int pop() {
+    if (isEmpty()) {
+        printf("Stack Underflow\n");
+        return -1; // Or any error value
+    }
+    int data = stack[top];
+    top--;
+    return data;
+}
+
+void show() {
+    if (isEmpty()) {
+        printf("Stack is empty\n");
         return;
     }
-
-}
-void pop(int *arr){
-    if(is_empty()){
-        printf("stack_underflow\n");
-
-    }
-    else{
-        int x;
-        printf("poppd item is %d\n",arr[top]);
-        top--;
-        return;
-    }
-}
-void traverse(int *arr){
-    printf("elements of stack are \n");
-    for(int i=0;i<=top;i++){
-        printf("%d ",arr[i]);
+    printf("Stack elements:\n");int i;
+    for ( i=top; i >= 0; i--) {
+        printf("%d ", stack[i]);
     }
     printf("\n");
 }
-int main(){
-    int arr[max];
-    
-    
-   if(is_empty()){
-    printf("stack is empty\n");
-   } 
-   else{
-    printf("stack is not empty\n");
 
-   }
-   if(is_full()){
-    printf("stack is full\n");
-    
-   }
-   else{
-    printf("not full\n");
-   }
-   while(1){
-    printf("Enter the choice\n1.push\n2.pop\n3.traverse\n4.break\n");
-    int x;
-    scanf("%d",&x);
-    switch (x)
-    {
+int main() {
+    int choice, data;
 
-    
-    case 1:
-    push(arr);
-    break;
-    case 2:
-    pop(arr);
-    break;
-    case 3:
-    traverse(arr);
-    
-    break;
-    case 4:
-    return 0;
+    while (1) {
+        printf("\n1. Push\n2. Pop\n3. Show\n4. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
 
-    
-
+        switch (choice) {
+            case 1:
+                printf("Enter data to push: ");
+                scanf("%d", &data);
+                push(data);
+                break;
+            case 2:
+                data = pop();
+                if (data != -1) {
+                    printf("%d popped from stack\n", data);
+                }
+                break;
+            case 3:
+                show();
+                break;
+            case 4:
+                exit(0);
+            default:
+                printf("Invalid choice\n");
+        }
     }
-    
 
-}
-
-    
-
-    
+    return 0;
 }
