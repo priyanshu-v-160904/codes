@@ -1,129 +1,87 @@
 #include <stdio.h>
-#include <stdlib.h>
-//insert at last 
-//insert at begining
-//insert at point
-//delete all three
-//traverse and traverse back
-
-struct node{
+#include<stdlib.h>
+struct node
+{
+     
     int data;
     struct node* next;
+    struct node* prev;
 
 };
+struct node *head=NULL;
 
-struct node* head=NULL;
-struct node* create(int data){
-    struct node* newnode=(struct node*)malloc(sizeof(struct node));
-    newnode->data=data;
-    newnode->next=NULL;
-    return newnode;
-}
-void insertLast(int data){
-    struct node* newnode=create(data);
+
+
+void create_node(int a){
+    struct node *new_node=(struct node *)malloc(sizeof(struct node));
+    new_node->data=a;
+    new_node->prev=NULL;
+    new_node->next=NULL;
+   
+    struct node *curr;
     if(head==NULL){
-        head=newnode;
-    }
-    else{
-        struct node* ptr;
-        ptr=head;
-        while(ptr->next!=NULL){
-            ptr=ptr->next;
+    head=new_node;
+   
+}
+else{
+curr=head;
+while(curr->next!=NULL){
+curr=curr->next;
 
-        }
-        ptr->next=newnode;
-        
-
-
-        
-
-    }
-
-
-
+}
+curr->next=new_node;
+new_node->prev=curr;
 
 }
 
 
+}
 void traverse(){
-    struct node* ptr=head;
-    while(ptr!=NULL){
-        printf("%d ",ptr->data);
-        ptr=ptr->next;
-    }
-    printf("\n");
-
-    
+struct node *ptr=head;
+while(ptr->next!=NULL){
+printf("%d\n",ptr->data);
+ptr=ptr->next;
 }
-void insertfirst(int data){
-    struct node* newnode=create(data);
-    newnode->next=head;
-    head=newnode;
+printf("%d",ptr->data);
+free(ptr);
 }
-int search(int x){
-    struct node* ptr=head;
-    while(ptr!=NULL){
-        if(ptr->data==x){
-            return 1;
-        }
-        ptr=ptr->next;
-    }
-    return 0;
-}
-void insertatpoint(int value,int dat){
-    struct node* newnode=create(dat);
-    struct node* ptr=head;
-    if(search(value)){
-        while(ptr->data!=value){
-        ptr=ptr->next;
-        }
-        newnode->next=ptr->next;
-        ptr->next=newnode;
-
-
-
-    }
-    else{
-        printf("no such element no insertion can be done");
-        
-    }
-
-
-}
-void deleteatvalue(int x){
-    struct node* ptr=head;
-    struct node* temp;
-    if(head->data==x){
-        head=ptr->next;
-        free(ptr);
-    }
-    else{
-        ptr=ptr->next;
-        while(ptr->data!=x){
-            temp=ptr;
-            ptr=ptr->next;
-
-
-        }
-        temp->next=ptr->next;
-        free(ptr);
-        }
-
+void insert_first(int x){
+struct node *first=(struct node *)malloc(sizeof(struct node));
+first->next=head;
+first->data=x;
+first->prev=NULL;
+head->prev=first;
+head=first;
 
 }
 
+ 
 int main(){
-    insertLast(10);
-    insertLast(20);
-    insertLast(30);
-    insertLast(40);
-    traverse();
-    insertfirst(5);
-    traverse();
-    insertatpoint(10,3);
-    traverse();
-    deleteatvalue(3);
-    traverse();
-    
-    printf("\nEOP\n");
+int n;
+
+
+int i=0;
+printf("enter the no of node you want to create\n");
+scanf("%d",&n);
+
+int x;
+for(int i=0;i<n;i++){
+
+printf("enter the data %d \n",i+1);
+scanf("%d",&x);
+create_node(x);
+
+}
+printf("\nlinked list is\n");
+traverse();
+int f;
+printf("enter the element\n");
+scanf("%d",&f);
+insert_first(f);
+traverse();
+printf("enter the element\n");
+scanf("%d",&f);
+printf("");
+
+
 }
